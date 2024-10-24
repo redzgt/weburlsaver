@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Saver</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 10px;
+            max-width: 300px;
+        }
+        .slot {
+            margin: 5px 0;
+        }
+        input {
+            width: 60%;
+            margin-right: 5px;
+        }
+        button {
+            width: 30%;
+        }
+        a {
+            margin-left: 5px;
+            color: blue;
+            text-decoration: underline;
+        }
+        .instruction {
+            font-size: 0.8em;
+            color: gray;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>URL Saver</h1>
+    <p class="instruction">Include <strong>https://</strong>!</p>
+    <div id="urlSlots">
+        <div class="slot">
+            <input type="text" id="input-0" placeholder="Enter URL here">
+            <button onclick="saveUrl(0)">Save</button>
+            <span id="slot-0"></span>
+        </div>
+        <div class="slot">
+            <input type="text" id="input-1" placeholder="Enter URL here">
+            <button onclick="saveUrl(1)">Save</button>
+            <span id="slot-1"></span>
+        </div>
+        <div class="slot">
+            <input type="text" id="input-2" placeholder="Enter URL here">
+            <button onclick="saveUrl(2)">Save</button>
+            <span id="slot-2"></span>
+        </div>
+        <div class="slot">
+            <input type="text" id="input-3" placeholder="Enter URL here">
+            <button onclick="saveUrl(3)">Save</button>
+            <span id="slot-3"></span>
+        </div>
+        <div class="slot">
+            <input type="text" id="input-4" placeholder="Enter URL here">
+            <button onclick="saveUrl(4)">Save</button>
+            <span id="slot-4"></span>
+        </div>
+    </div>
+
+    <script>
+        const slots = 5;
+
+        function loadUrls() {
+            for (let i = 0; i < slots; i++) {
+                const savedUrl = localStorage.getItem(`urlSlot${i}`);
+                const inputField = document.getElementById(`input-${i}`);
+                const slotDisplay = document.getElementById(`slot-${i}`);
+                
+                if (savedUrl) {
+                    inputField.value = savedUrl;
+                    slotDisplay.innerHTML = `<a href="${savedUrl}" target="_blank">Open Link: ${savedUrl}</a>`;
+                } else {
+                    inputField.value = '';
+                    slotDisplay.innerHTML = '';
+                }
+            }
+        }
+
+        function saveUrl(slot) {
+            const inputField = document.getElementById(`input-${slot}`);
+            const url = inputField.value.trim();
+            
+            if (url) {
+                localStorage.setItem(`urlSlot${slot}`, url);
+                loadUrls();
+            }
+        }
+
+        loadUrls();
+    </script>
+</body>
+</html>
