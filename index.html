@@ -25,6 +25,11 @@
             color: blue;
             text-decoration: underline;
         }
+        .delete-btn {
+            margin-left: 5px;
+            color: red;
+            cursor: pointer;
+        }
         .instruction {
             font-size: 0.8em;
             color: gray;
@@ -74,7 +79,9 @@
                 
                 if (savedUrl) {
                     inputField.value = savedUrl;
-                    slotDisplay.innerHTML = `<a href="${savedUrl}" target="_blank">Open Link: ${savedUrl}</a>`;
+                    slotDisplay.innerHTML = `
+                        <a href="${savedUrl}" target="_blank">Open Link: ${savedUrl}</a>
+                        <span class="delete-btn" onclick="deleteUrl(${i})">Delete</span>`;
                 } else {
                     inputField.value = '';
                     slotDisplay.innerHTML = '';
@@ -90,6 +97,11 @@
                 localStorage.setItem(`urlSlot${slot}`, url);
                 loadUrls();
             }
+        }
+
+        function deleteUrl(slot) {
+            localStorage.removeItem(`urlSlot${slot}`);
+            loadUrls();
         }
 
         loadUrls();
